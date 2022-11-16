@@ -45,7 +45,7 @@ void key_callback(GLFWwindow*, int key, int, int act, int) {
 }
 
 void window_size_callback(GLFWwindow*, int w, int h){
-	glViewport(0,0, w, h);
+	glViewport(0,0, w * 2, h * 2);
 	Window::width = w;
 	Window::height = h;
 }

@@ -6,6 +6,7 @@ layout (location = 2) in vec4 v_light;
 
 out vec4 a_color;
 out vec2 a_texCoord;
+out float a_distance;
 
 uniform mat4 u_model;
 uniform mat4 u_proj;
@@ -21,5 +22,6 @@ void main(){
 	a_color.rgb += v_light.a;
 	a_color.rgb *= 1.0-position.z*0.0025;
 	a_color.rgb = pow(a_color.rgb, vec3(1.0/0.7));
+	a_distance = length(position);
 	gl_Position = position;
 }

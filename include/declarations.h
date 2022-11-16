@@ -64,11 +64,13 @@ int initialize_assets(Assets* assets) {
 	if (!_load_cubemap(assets, NAME))\
 		return 1;
 
-	LOAD_SHADER("res/main1.glslv", "res/main1.glslf", "main");
-	LOAD_SHADER("res/crosshair.glslv", "res/crosshair.glslf", "crosshair");
-	LOAD_SHADER("res/sky.glslv", "res/sky.glslf", "sky");
+	LOAD_SHADER("res/main.vert", "res/main.frag", "main");
+	LOAD_SHADER("res/crosshair.vert", "res/crosshair.frag", "crosshair");
+	LOAD_SHADER("res/fps.vert", "res/fps.frag", "fps");
+	LOAD_SHADER("res/sky.vert", "res/sky.frag", "sky");
 
 	LOAD_TEXTURE("res/block.png", "block");
+	LOAD_TEXTURE("res/fps.png", "fps");
 	LOAD_CUBEMAP("sky");
 	return 0;
 }

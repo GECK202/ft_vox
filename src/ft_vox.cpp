@@ -144,7 +144,7 @@ int initialise(Assets* assets, WorldFiles *wfile, Player* player, Camera *camera
 	return 0;
 }
 
-void main_cycle(long frame, float delta, float lastTime, Chunks *chunks, Player* player, WorldFiles *wfile, Camera *camera, Assets* assets, int seed) {
+void main_cycle(Assets* assets,WorldFiles *wfile,Player* player,Chunks *chunks,Camera *camera,int seed) {
 	std::cout << "-- preparing systems" << std::endl;
 	VoxelRenderer renderer(1024*1024);
 	PhysicsSolver physics(vec3(0,-GRAVITY,0));
@@ -152,11 +152,20 @@ void main_cycle(long frame, float delta, float lastTime, Chunks *chunks, Player*
 	init_renderer();
 	ChunksController chunksController(chunks, &lighting, seed);
 	std::cout << "-- initializing finished" << std::endl;
+	float lastTime = glfwGetTime();
+	float delta = 0.0f;
+	float fpsTime = lastTime;
+	int fps = 0;
 	while (!Window::isShouldClose()){
-		frame++;
 		float currentTime = glfwGetTime();
 		delta = currentTime - lastTime;
 		lastTime = currentTime;
+		fps++;
+		if ((currentTime - fpsTime) >= 1) {
+			std::cout<<"fps:"<<fps<<std::endl;
+			fps = 0;
+			fpsTime = currentTime;
+		}
 
 		if (Events::jpressed(GLFW_KEY_ESCAPE)){
 			Window::setShouldClose(true);
@@ -172,14 +181,14 @@ void main_cycle(long frame, float delta, float lastTime, Chunks *chunks, Player*
 		for (int i = 0; i < freeLoaders; i++)
 			chunksController.loadVisible(wfile);
 
-		draw_world(camera, assets, chunks);
+		draw_world(camera, assets, chunks, fps);
 
 		Window::swapBuffers();
 		Events::pullEvents();
 	}
 }
 
-void finalize(WorldFiles *wfile, Player* player, Chunks *chunks, Assets* assets) {
+void finalize(Assets* assets,WorldFiles *wfile,Player* player,Chunks *chunks) {
 	std::cout << "-- saving world" << std::endl;
 	wfile->writePlayer(player);
 	write_world(wfile, chunks);
@@ -197,11 +206,9 @@ int main(int argc, char *argv[]) {
 	if (argc == 2) {
 		seed = std::atoi(argv[1]);
 	}
-	float lastTime = glfwGetTime();
-	float delta = 0.0f;
-	long frame = 0;
+	
 	Assets* assets = new Assets();
-	Camera *camera = new Camera(vec3 (0, 255, 0), radians(90.0f));
+	Camera *camera = new Camera(vec3 (0, 255, 0), radians(80.0f));
 	WorldFiles *wfile = new WorldFiles("world/", REGION_VOL * (CHUNK_VOL * 2 + 8));
 	Chunks *chunks = new Chunks(34,1,34, 0,0,0);
 	Player* player = new Player(vec3(camera->position), DEFAULT_PLAYER_SPEED, camera);
@@ -209,8 +216,8 @@ int main(int argc, char *argv[]) {
 	if (initialise(assets,  wfile, player, camera) != 0)
 		return 1;
 
-	main_cycle(frame,delta,lastTime,chunks,player,wfile,camera,assets, seed);
-	finalize(wfile, player, chunks, assets);
+	main_cycle(assets,wfile,player,chunks,camera,seed);
+	finalize(assets, wfile, player,chunks);
 
 	return 0;
 }

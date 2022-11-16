@@ -4,11 +4,11 @@
 #define WIDTH 1280
 #define HEIGHT 720
 #define GRAVITY 19.6f
-#define DEFAULT_PLAYER_SPEED 4.0f
+#define DEFAULT_PLAYER_SPEED 2.0f
 #define RUN_SPEED_MUL 1.5f
 #define DEFAULT_AIR_DAMPING 0.1f
-#define PLAYER_NOT_ONGROUND_DAMPING 10.0f
-#define FLIGHT_SPEED_MUL 5.0f
+#define PLAYER_NOT_ONGROUND_DAMPING 10.0
+#define FLIGHT_SPEED_MUL 20.0f
 #define JUMP_FORCE 7.0f
 
 # include <iostream>
