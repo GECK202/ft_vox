@@ -2,7 +2,7 @@
 
 PROGRAM_NAME = ft_vox
 
-FLAGS =	 -std=c++11 -pthread -Wall -Wextra #-Werror -g
+FLAGS =	 -std=c++11 -pthread -Wall -Wextra -Werror -g
 
 FILES =		ft_vox \
 			window \

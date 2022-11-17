@@ -13,6 +13,6 @@ void main(){
 	vec4 tex_color = texture(u_texture0, a_texCoord);
 	if (tex_color.a < 0.5)
 		discard;
-	float depth = a_distance;//(a_distance/256.0)*(a_distance/256.0)*256.0;
-	f_color = mix(a_color * tex_color, vec4(u_fogColor,1.0), min(1.0, a_distance/255.0));//min(1.0, depth/256.0/1.0f));
+	float depth = a_distance;
+	f_color = mix(a_color * tex_color, vec4(u_fogColor,1.0), 0);//min(1.0, a_distance/255.0));
 }

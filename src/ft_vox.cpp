@@ -9,8 +9,10 @@ void update_controls(PhysicsSolver* physics,
 		Events::toogleCursor();
 	}
 
-	for (int i = 1; i < 10; i++){
+	for (int i = 0; i < 10; i++){
 		if (Events::jpressed(GLFW_KEY_0+i)){
+			if (i == 0)
+				i = 10;
 			player->choosenBlock = i;
 		}
 	}
@@ -156,13 +158,14 @@ void main_cycle(Assets* assets,WorldFiles *wfile,Player* player,Chunks *chunks,C
 	float delta = 0.0f;
 	float fpsTime = lastTime;
 	int fps = 0;
+	float fps_r = 0.0f;
 	while (!Window::isShouldClose()){
 		float currentTime = glfwGetTime();
 		delta = currentTime - lastTime;
 		lastTime = currentTime;
 		fps++;
 		if ((currentTime - fpsTime) >= 1) {
-			std::cout<<"fps:"<<fps<<std::endl;
+			fps_r = (float) fps;
 			fps = 0;
 			fpsTime = currentTime;
 		}
@@ -181,7 +184,7 @@ void main_cycle(Assets* assets,WorldFiles *wfile,Player* player,Chunks *chunks,C
 		for (int i = 0; i < freeLoaders; i++)
 			chunksController.loadVisible(wfile);
 
-		draw_world(camera, assets, chunks, fps);
+		draw_world(camera, assets, chunks, fps_r);
 
 		Window::swapBuffers();
 		Events::pullEvents();
@@ -210,7 +213,7 @@ int main(int argc, char *argv[]) {
 	Assets* assets = new Assets();
 	Camera *camera = new Camera(vec3 (0, 255, 0), radians(80.0f));
 	WorldFiles *wfile = new WorldFiles("world/", REGION_VOL * (CHUNK_VOL * 2 + 8));
-	Chunks *chunks = new Chunks(34,1,34, 0,0,0);
+	Chunks *chunks = new Chunks(32,1,32, 0,0,0);
 	Player* player = new Player(vec3(camera->position), DEFAULT_PLAYER_SPEED, camera);
 
 	if (initialise(assets,  wfile, player, camera) != 0)

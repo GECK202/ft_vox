@@ -134,6 +134,10 @@ void setup_definitions() {
 	block->obstacle = false;
 	block->selectable = false;
 	Block::blocks[block->id] = block;
+
+	//SAND
+	block = new Block(10,12);
+	Block::blocks[block->id] = block;
 }
 
 #endif

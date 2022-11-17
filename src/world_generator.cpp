@@ -46,11 +46,11 @@ void WorldGenerator::generate(voxel* voxels, int cx, int cy, int cz, int seed){
 			for (int y = 0; y < CHUNK_SIZE_H; y++){
 				int real_y = y + cy * CHUNK_SIZE_H;
 				
-				int id = 0;//real_y < 55 ? 9 : 0;
+				int id = 0;
 				//*
 				if (real_y == (int)height) {
 					if (real_y < 50)
-						id = 8;
+						id = 10;
 					else
 						id = 2;
 
@@ -73,9 +73,10 @@ void WorldGenerator::generate(voxel* voxels, int cx, int cy, int cz, int seed){
 					if (worm_height < 0.9 && worm_height > 0.5)
 						id = 0;
 				}
-
+				if (id == 0 && real_y < 48)
+					id = 9;
 				if (real_y <= 2)
-					id = 2;
+					id = 8;
 				voxels[(y * CHUNK_SIZE_D + z) * CHUNK_SIZE_W + x].id = id;
 			}
 		}
