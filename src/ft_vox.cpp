@@ -9,6 +9,8 @@ void update_controls(PhysicsSolver* physics,
 		Events::toogleCursor();
 	}
 
+
+
 	for (int i = 0; i < 10; i++){
 		if (Events::jpressed(GLFW_KEY_0+i)){
 			if (i == 0)
@@ -173,6 +175,10 @@ void main_cycle(Assets* assets,WorldFiles *wfile,Player* player,Chunks *chunks,C
 		if (Events::jpressed(GLFW_KEY_ESCAPE)){
 			Window::setShouldClose(true);
 		}
+
+		if (Events::jpressed(GLFW_KEY_Q)){
+			Window::swapMode();
+		}	
 
 		update_controls(&physics, chunks, player, delta);
 		update_interaction(chunks, &physics, player, &lighting);
